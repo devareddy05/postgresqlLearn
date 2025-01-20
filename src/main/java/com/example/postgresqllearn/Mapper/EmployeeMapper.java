@@ -2,7 +2,7 @@ package com.example.postgresqllearn.Mapper;
 
 import com.example.postgresqllearn.dto.EmployeeDto;
 import com.example.postgresqllearn.entity.Employee;
-import org.mapstruct.Mapper;
+
 
 
 public class EmployeeMapper {

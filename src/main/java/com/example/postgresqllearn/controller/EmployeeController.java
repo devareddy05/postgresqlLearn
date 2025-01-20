@@ -2,7 +2,6 @@ package com.example.postgresqllearn.controller;
 
 
 import com.example.postgresqllearn.dto.EmployeeDto;
-import com.example.postgresqllearn.entity.Employee;
 import com.example.postgresqllearn.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
