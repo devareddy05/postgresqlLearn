@@ -17,10 +17,13 @@ import java.util.List;
 @NoArgsConstructor
 public class DepartmentDto {
 
+
     private Long id;
     private String name;
     private String location;
     private String manager;
+
+    private String publicId;
 
     private List<Employee> employees;
 }

@@ -15,11 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name="employee") //change // relations
-public class Employee {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="emp_id")
-    private Long id;
+public class Employee extends BaseEntity {
 
     @Column(name="first_name")
     private String firstName;
@@ -34,8 +30,9 @@ public class Employee {
     private String email;
 
     @ManyToOne
-    @JoinColumn(name = "department_id", nullable = false)
+    @JoinColumn(name = "department_public_id", nullable = false)
     private Department department;
+
 
     @ManyToMany(mappedBy = "attendees")
     private List<Meeting> meetings = new ArrayList<>();

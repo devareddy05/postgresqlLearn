@@ -16,10 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name="DEPARTMENT")
-public class Department {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Department extends BaseEntity {
 
     private String name;
     private String location;
@@ -29,4 +26,3 @@ public class Department {
     private List<Employee> employees = new ArrayList<>();
 
 }
-

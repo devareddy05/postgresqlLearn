@@ -3,7 +3,9 @@ package com.example.postgresqllearn.service;
 import com.example.postgresqllearn.Mapper.EmployeeMapper;
 import com.example.postgresqllearn.dto.EmployeeDto;
 import com.example.postgresqllearn.entity.Employee;
+import com.example.postgresqllearn.entity.Meeting;
 import com.example.postgresqllearn.exception.DatabaseIntegrityException;
+import com.example.postgresqllearn.exception.NoSuchElementException;
 import com.example.postgresqllearn.exception.ResourceNotFoundException;
 import com.example.postgresqllearn.repository.EmployeeRepository;
 import org.slf4j.Logger;
@@ -32,6 +34,7 @@ public class EmployeeService {
     public EmployeeDto createEmployee(EmployeeDto employeeDto) {
 
         Employee employee = employeeMapper.mapToEmployee(employeeDto);
+        employee.setDepartment(employeeDto.getDepartment());
         return saveEmployee(employee);
     }
 
@@ -74,6 +77,37 @@ public class EmployeeService {
 
 
     public EmployeeDto saveEmployee(Employee employee) {
+
+        if (employeeRepository.existsByEmail(employee.getEmail())) {
+            throw new DatabaseIntegrityException("Email ID " + employee.getEmail() + " already exists.");
+        }
+
+
+        if (employeeRepository.existsByPublicId(employee.getPublicId())) {
+            throw new DatabaseIntegrityException("This Id " + employee.getPublicId() + " already exists.");
+        }
+
+
+        employeeRepository.save(employee);
+        return employeeMapper.mapToEmployeeDto(employee);
+    }
+
+
+
+
+    public List<Meeting> getMeetingsByEmployeeId(Long employeeId) {
+        try {
+            Employee employee = employeeRepository.findById(employeeId)
+                    .orElseThrow(() -> new NoSuchElementException("Employee not found with ID: " + employeeId));
+            return employee.getMeetings();
+        } catch (Exception e) {
+            throw new RuntimeException("Error fetching meetings for employee ID: " + employeeId, e);
+        }
+    }
+
+
+    // ASK BHARATH ABOUT BEST PRACTISE
+   /* public EmployeeDto saveEmployee(Employee employee) {
         try {
             employeeRepository.save(employee);
         } catch (DatabaseIntegrityException e) {
@@ -83,5 +117,5 @@ public class EmployeeService {
         }
 
         return employeeMapper.mapToEmployeeDto(employee);
-    }
+    }*/
 }

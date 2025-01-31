@@ -16,10 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Meeting {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long meetingId;
+public class Meeting extends BaseEntity {
 
     private String description;
     private LocalDate date;
@@ -27,14 +24,14 @@ public class Meeting {
 
     @ManyToMany
     @JoinTable(
-            name = "employee_meeting", // Join table
+            name = "employee_meeting",
             joinColumns = @JoinColumn(name = "meeting_id"),
             inverseJoinColumns = @JoinColumn(name = "employee_id")
     )
     private List<Employee> attendees = new ArrayList<>();
 
 
-    private String organizer;
+    private String organizerId;
 
 }
 

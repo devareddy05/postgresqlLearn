@@ -19,12 +19,12 @@ import java.util.List;
 @NoArgsConstructor
 public class MeetingDto {
 
-    private Long meetingId;
+
     private String description;
     private LocalDate date;
     private LocalTime time;
-    private String organizer;
-
+    private String publicId;
+    private String organizerId;
     private List<Employee> attendees ;
 
 

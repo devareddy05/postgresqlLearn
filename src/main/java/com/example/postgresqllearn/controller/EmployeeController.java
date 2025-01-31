@@ -2,6 +2,7 @@ package com.example.postgresqllearn.controller;
 
 
 import com.example.postgresqllearn.dto.EmployeeDto;
+import com.example.postgresqllearn.entity.Meeting;
 import com.example.postgresqllearn.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,5 +59,11 @@ public class EmployeeController {
     }
 
 
+
+    // Get all meetings for a particular employee
+    @GetMapping("/by-employee/{employeeId}")
+    public List<Meeting> getMeetingsByEmployeeId(@PathVariable Long employeeId) {
+        return employeeService.getMeetingsByEmployeeId(employeeId);
+    }
 
 }

@@ -2,8 +2,10 @@ package com.example.postgresqllearn.service;
 
 import com.example.postgresqllearn.Mapper.MeetingMapper;
 import com.example.postgresqllearn.dto.MeetingDto;
+import com.example.postgresqllearn.entity.Employee;
 import com.example.postgresqllearn.entity.Meeting;
 import com.example.postgresqllearn.exception.DatabaseIntegrityException;
+import com.example.postgresqllearn.exception.NoSuchElementException;
 import com.example.postgresqllearn.exception.ResourceNotFoundException;
 import com.example.postgresqllearn.repository.MeetingRepository;
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +26,8 @@ public class MeetingService {
 
     @Autowired
     private MeetingMapper meetingMapper;
+
+
 
     public MeetingDto createMeeting(MeetingDto meetingDto) {
         Meeting meeting = meetingMapper.mapToMeeting(meetingDto);
@@ -66,4 +71,31 @@ public class MeetingService {
 
         return meetingMapper.mapToMeetingDto(meeting);
     }
+
+
+    // Fetch all meetings for a particular date
+    public List<Meeting> getMeetingsByDate(LocalDate date) {
+        try {
+            List<Meeting> meetings = meetingRepository.findByDate(date);
+            if (meetings.isEmpty()) {
+                throw new NoSuchElementException("No meetings found for the specified date: " + date);
+            }
+            return meetings;
+        } catch (Exception e) {
+            throw new RuntimeException("Error fetching meetings for date: " + date, e);
+        }
+    }
+
+    // Fetch all attendees for a particular meeting
+    public List<Employee> getAttendeesByMeetingId(Long meetingId) {
+        try {
+            Meeting meeting = meetingRepository.findById(meetingId)
+                    .orElseThrow(() -> new NoSuchElementException("Meeting not found with ID: " + meetingId));
+            return meeting.getAttendees();
+        } catch (Exception e) {
+            throw new RuntimeException("Error fetching attendees for meeting ID: " + meetingId, e);
+        }
+    }
+
+
 }

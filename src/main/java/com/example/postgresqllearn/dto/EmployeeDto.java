@@ -13,9 +13,8 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
-@Setter
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -23,6 +22,7 @@ public class EmployeeDto {
     private Long id;
     private String firstName;
     private String lastName;
+    private String publicId;
 
     @NotNull(message = "Email should not be null")
     private String email;
