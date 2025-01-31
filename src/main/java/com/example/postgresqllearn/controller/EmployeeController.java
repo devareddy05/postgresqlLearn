@@ -3,10 +3,12 @@ package com.example.postgresqllearn.controller;
 
 import com.example.postgresqllearn.dto.EmployeeDto;
 import com.example.postgresqllearn.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -18,15 +20,24 @@ public class EmployeeController {
 
     @PostMapping
     public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto employeeDto) {
-        EmployeeDto savedEmployee = employeeService.createEmployee(employeeDto);
-        return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
+        EmployeeDto createdEmployee = employeeService.createEmployee(employeeDto);
+        return new ResponseEntity<>(createdEmployee, HttpStatus.CREATED);
     }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable Long id, @RequestBody EmployeeDto employeeDto) {
+        EmployeeDto updatedEmployee = employeeService.updateEmployee(id, employeeDto);
+        return ResponseEntity.ok(updatedEmployee);
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeDto> getEmployeesbyId(@PathVariable("id") Long id) {
         EmployeeDto employeeDto = employeeService.getEmployeeById(id);
         return new ResponseEntity<>(employeeDto, HttpStatus.OK);
     }
+
 
     @GetMapping
     public ResponseEntity<List<EmployeeDto>> getEmployees() {
@@ -35,11 +46,9 @@ public class EmployeeController {
 
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable("id") Long id, @RequestBody EmployeeDto employeeDto) {
-        EmployeeDto updatedEmployee = employeeService.updateEmployee(id, employeeDto);
-        return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
-    }
+
+
+
 
 
     @DeleteMapping("/{id}")

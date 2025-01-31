@@ -35,6 +35,25 @@ dependencies {
     implementation 'org.mapstruct:mapstruct:1.4.2.Final'
     implementation 'org.codehaus.groovy:groovy-all:3.0.9'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'javax.validation:validation-api:2.0.1.Final'
+
+    runtimeOnly 'com.h2database:h2'
+    testImplementation 'com.h2database:h2'
+
+
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.2.RELEASE'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'com.jayway.jsonpath:json-path:2.9.0'
+
+
+
+
+
+
 }
 
 tasks.named('test') {
